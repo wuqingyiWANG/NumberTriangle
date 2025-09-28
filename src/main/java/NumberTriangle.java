@@ -89,8 +89,19 @@ public class NumberTriangle {
      *
      */
     public int retrieve(String path) {
-        // TODO implement this method
-        return -1;
+        NumberTriangle CurrentTriangle = this;
+        if (path.isEmpty()) {
+            return this.root;
+        } else {
+            for (int i = 0; i < path.length(); i++) {
+                if (path.charAt(i) == 'l') {
+                    CurrentTriangle = CurrentTriangle.left;
+                } else {
+                    CurrentTriangle = CurrentTriangle.right;
+                }
+            }
+        }
+        return CurrentTriangle.root;
     }
 
     /** Read in the NumberTriangle structure from a file.
@@ -109,29 +120,27 @@ public class NumberTriangle {
         // are more convenient to work with when reading the file contents.
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+
+        // TODO define any variables that you want to use to store things
+
+        // will need to return the top of the NumberTriangle,
+        // so might want a variable for that.
+        NumberTriangle top = null;
+
         String line = br.readLine();
-        NumberTriangle top = new NumberTriangle(Integer.parseInt(line));
-        ArrayList<NumberTriangle> ThisLine = new ArrayList<>();
-        ThisLine.add(top);
-        line = br.readLine();
         while (line != null) {
-            String[] NextLineValue = line.split(" ");
-            ArrayList<NumberTriangle> NextLine = new ArrayList<>();
-            for (int i = 0; i < NextLineValue.length; i++) {
-                NumberTriangle CurrentLeaf = new NumberTriangle(Integer.parseInt(NextLineValue[i]));
-                NextLine.add(CurrentLeaf);
-            }
-            for (int i = 0; i < ThisLine.size(); i++) {
-                NumberTriangle CurrentNode = ThisLine.get(i);
-                CurrentNode.left = NextLine.get(i);
-                CurrentNode.right = NextLine.get(i+1);
-            }
-            ThisLine = NextLine;
+
+            // remove when done; this line is included so running starter code prints the contents of the file
+            System.out.println(line);
+
+            // TODO process the line
+
+            //read the next line
             line = br.readLine();
         }
         br.close();
         return top;
-
     }
 
     public static void main(String[] args) throws IOException {
